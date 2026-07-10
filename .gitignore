@@ -1,0 +1,11 @@
+# Oko skills are proprietary — never commit them.
+# They live on disk locally (so opencode still loads them) but are
+# excluded from this repository.
+oko-*/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
