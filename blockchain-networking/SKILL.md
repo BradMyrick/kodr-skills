@@ -1,6 +1,6 @@
 ---
 name: blockchain-networking
-description: P2P networking for chains — gossipsub for block/tx propagation, Kademlia DHT for peer discovery, and message validation. Use when designing chain networking or peer discovery. NOT for a specific L1's data plane — use blockchain-avalanche / oko skills.
+description: P2P networking for chains — gossipsub for block/tx propagation, Kademlia DHT for peer discovery, and message validation. Use when designing chain networking or peer discovery. NOT for a specific L1's data plane — use blockchain-avalanche.
 version: 1.0.0
 ---
 

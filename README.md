@@ -42,6 +42,7 @@ version: 1.0.0
 | `cs` | Landmark computer-science papers (theory, ML, distributed systems) | 27 |
 | `security` | Secure coding, supply chain, threat modeling | 1 |
 | `devops` | CI/CD, release pipelines, GitHub Actions | 1 |
+| (other) | Project-specific stacks (TypeSafe AI) | 1 |
 
 
 ## Skills
@@ -146,9 +147,17 @@ version: 1.0.0
 |---|---|---|
 | `devops-github-workflows` | `devops-github-workflows` | GitHub Actions CI/CD workflows for Rust projects. Covers build matrices, caching, fmt/cli… |
 
+### Other project stacks
+| Skill | Directory | Summary |
+|---|---|---|
+| `typesafe-ai` | `typesafe-ai` | Build AI-powered software with TypeSafe: small units of AI intelligence you can use lik… |
+
 ## Usage
 
-Point `opencode.json` at this directory and load `AGENTS.md` as an instruction:
+**Any harness:** see [INSTALL.md](INSTALL.md) — a paste-ready prompt that has
+your agent wire this repo into whatever instruction/skill mechanism it supports.
+
+**opencode:** point `opencode.json` at this directory and load `AGENTS.md` as an instruction:
 
 ```json
 {

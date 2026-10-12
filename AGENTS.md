@@ -87,5 +87,6 @@ relevant `cs-*` foundational paper, then to the Core Principles.
 
 ## Routing discipline
 - If two skills match, load the **more specific** one; still tied → load both and reconcile.
+- If your harness has no `skill` tool, treat a router match as "read `<skill-name>/SKILL.md` now" and apply it to the task.
 - Cite the governing invariant in your reasoning (e.g. `n ≥ 3f+1`, `C = W·log₂(1+S/N)`, the roofline number).
 - Every `cs-*` skill is both reference and proof — prefer it over intuition for foundational claims.

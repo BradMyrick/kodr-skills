@@ -3,6 +3,12 @@
 # excluded from this repository.
 oko-*/
 
+# Work-specific skill — keep local only.
+avalanchego-core-backend/
+
+# Personal agent rules layered on top of the public AGENTS.md router.
+AGENTS.local.md
+
 # OS / editor noise
 .DS_Store
 Thumbs.db
