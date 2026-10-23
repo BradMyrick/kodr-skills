@@ -42,6 +42,7 @@ version: 1.0.0
 | `cs` | Landmark computer-science papers (theory, ML, distributed systems) | 27 |
 | `security` | Secure coding, supply chain, threat modeling | 1 |
 | `devops` | CI/CD, release pipelines, GitHub Actions | 1 |
+| `frontend` | Share cards/scrape surface, rendered-page UI checks | 2 |
 | (other) | Project-specific stacks (TypeSafe AI) | 1 |
 
 
@@ -146,6 +147,12 @@ version: 1.0.0
 | Skill | Directory | Summary |
 |---|---|---|
 | `devops-github-workflows` | `devops-github-workflows` | GitHub Actions CI/CD workflows for Rust projects. Covers build matrices, caching, fmt/cli… |
+
+### `frontend`
+| Skill | Directory | Summary |
+|---|---|---|
+| `frontend-share-cards` | `frontend-share-cards` | Link-preview metadata (Open Graph / Twitter cards), canonical URLs, favicons, robots… |
+| `frontend-ui-checks` | `frontend-ui-checks` | Headless rendered-page UI verification — multi-width matrices, visibility vs rects, key… |
 
 ### Other project stacks
 | Skill | Directory | Summary |

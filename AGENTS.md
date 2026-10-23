@@ -85,6 +85,13 @@ relevant `cs-*` foundational paper, then to the Core Principles.
 - security review / hardening / supply chain → `security-software`
 - CI/CD / GitHub Actions / releases → `devops-github-workflows`
 
+### Frontend
+- Open Graph / Twitter share cards, canonical URLs, og:image specs,
+  favicon/robots/sitemap 404s → `frontend-share-cards`
+- rendered-page UI checkers, multi-width matrices, visibility-vs-rect,
+  keyboard order, contrast/type floors, truthful state, launch hardening →
+  `frontend-ui-checks`
+
 ## Routing discipline
 - If two skills match, load the **more specific** one; still tied → load both and reconcile.
 - If your harness has no `skill` tool, treat a router match as "read `<skill-name>/SKILL.md` now" and apply it to the task.
