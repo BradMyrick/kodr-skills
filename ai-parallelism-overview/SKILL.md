@@ -1,7 +1,7 @@
 ---
 name: ai-parallelism-overview
 description: The map of distributed-training parallelism — data, tensor, pipeline, sequence, expert, ZeRO — and how they compose into 3D/4D/5D parallelism plus cluster scheduling. Use FIRST for any training/inference parallelism question before going deep into a specific axis. NOT a deep-dive into any single axis.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Skill: Distributed-Training Parallelism Map
@@ -35,34 +35,57 @@ A model too large for one GPU, or a batch too big for one GPU's memory, must be 
 ### 3. Reference Implementation (Python — parallelism planner)
 ```python
 from dataclasses import dataclass
+from math import ceil
 
 @dataclass
 class ModelSpec:
     params_B: float        # billions of parameters
-    batch_tokens: int
-    seq_len: int
-    hidden: int
-    layers: int
 
-def bytes_for(params_B: float, dtype_bytes: int = 2, optim_factor: float = 12) -> float:
-    """fp16/bf16 weights + Adam state + grads ~= optim_factor * params bytes (ZeRO-0)."""
-    return params_B * 1e9 * optim_factor * dtype_bytes / 2  # rule of thumb: ~12x params in fp16
+# bytes/param under mixed-precision Adam: bf16 weights + bf16 grads +
+# fp32 master weights + fp32 Adam moments (see `ai-memory-analysis`)
+W_BYTES, G_BYTES, O_BYTES = 2, 2, 12
 
-def choose_axes(model: ModelSpec, gpu_mem_bytes: float, n_gpu: int, nvlink_group: int) -> dict:
-    """Greedy: fit with DP+ZeRO; add TP intra-node if a layer still won't fit; PP across nodes last."""
-    single = bytes_for(model.params_B)
-    need = max(1, int(single // gpu_mem_bytes) + 1)        # Rule 1: how many GPUs to fit weights
-    tp = 1
-    if need > 1:
-        tp = min(need, nvlink_group)                       # Rule 3: TP stays intra-node (NVLink)
-    dp = max(1, n_gpu // tp)                                # Rule 4: product = N
-    return {"DP": dp, "TP": tp, "PP": 1, "EP": 1,
-            "shard": f"ZeRO stage {min(3, need)}", "fits": (dp * tp) <= n_gpu}
+def per_gpu_state_bytes(params_B: float, tp: int, pp: int, dp: int, zero: int) -> float:
+    """Per-GPU weights+grads+optimizer bytes. TP/PP shard the model; ZeRO shards across DP ranks."""
+    shard = tp * pp
+    w = params_B * 1e9 * W_BYTES / shard
+    g = params_B * 1e9 * G_BYTES / shard
+    o = params_B * 1e9 * O_BYTES / shard
+    if zero >= 1: o /= dp          # stage 1: optimizer state sharded over DP
+    if zero >= 2: g /= dp          # stage 2: + grads
+    if zero >= 3: w /= dp          # stage 3: + params (ZeRO-3 / FSDP)
+    return w + g + o
+
+def choose_axes(model: ModelSpec, gpu_mem_bytes: float, n_gpu: int, nvlink_group: int,
+               act_headroom: float = 0.85) -> dict:
+    """Rules 1-4: memory math first (1); prefer DP+ZeRO, TP only intra-node, PP last (2, 3); product == n_gpu (4)."""
+    budget = gpu_mem_bytes * act_headroom   # Rule 1: reserve headroom for activations
+    best, best_cost = None, None
+    for zero in (0, 1, 2, 3):
+        for tp in (1, 2, 4, 8):
+            if tp > nvlink_group:           # Rule 3: TP stays on the NVLink island
+                continue
+            for pp in (1, 2, 4, 8):
+                if n_gpu % (tp * pp):
+                    continue
+                dp = n_gpu // (tp * pp)     # Rule 4: DP * TP * PP == n_gpu
+                if per_gpu_state_bytes(model.params_B, tp, pp, dp, zero) <= budget:
+                    # Rule 2: cheapest comm first — ZeRO < TP < PP
+                    cost = zero + 4 * (tp > 1) + 8 * (pp > 1)
+                    if best_cost is None or cost < best_cost:
+                        best, best_cost = {"DP": dp, "TP": tp, "PP": pp, "ZeRO": zero}, cost
+    if best:
+        return best
+    # Nothing fits: report the floor — full ZeRO-3 sharding needs >= 16 bytes/param per GPU
+    total = model.params_B * 1e9 * (W_BYTES + G_BYTES + O_BYTES)
+    return {"fits": False, "min_gpus_zero3": ceil(total / budget)}
 
 if __name__ == "__main__":
-    m = ModelSpec(70, 2048, 2048, 8192, 80)
-    print("70B on 8x80GB:", choose_axes(m, gpu_mem_bytes=80*2**30, n_gpu=8, nvlink_group=8))
-    print("~bytes for 70B (fp16+Adam):", f"{bytes_for(70)/2**30:.0f} GiB")
+    g80 = 80 * 2**30
+    print("7B  on  8x80GB:", choose_axes(ModelSpec(7),  g80, 8, 8))    # DP=8, ZeRO-1
+    print("70B on  8x80GB:", choose_axes(ModelSpec(70), g80, 8, 8))    # fits: False — do the math first
+    print("70B on 16x80GB:", choose_axes(ModelSpec(70), g80, 16, 8))   # DP=16, ZeRO-3
+    print("70B on 64x80GB:", choose_axes(ModelSpec(70), g80, 64, 8))   # DP=64, ZeRO-3
 ```
 
 ### 4. Agent Execution Directives

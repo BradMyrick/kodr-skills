@@ -1,7 +1,7 @@
 ---
 name: blockchain-zk-proofs
 description: Zero-knowledge proof systems — zk-SNARKs, zk-STARKs, PLONK — and when to apply them for privacy, rollups, or verifiable computation. Use when designing privacy, validity rollups, or proving computation off-chain. NOT for ordinary signatures — use blockchain-signatures-threshold.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Skill: Zero-Knowledge Proofs
@@ -37,8 +37,10 @@ A proof argues knowledge of a **witness** $w$ (e.g. a secret key) satisfying a r
 ```python
 import hashlib, secrets
 
-P = 2**445 - 17        # curve25519-ish field order (illustrative); real Schnorr uses a prime-order group
-G = 3                  # generator (illustrative)
+P = 2**255 - 19        # the curve25519 field prime — MUST be prime: in a composite modulus the
+                       # multiplicative group is not cyclic of order P-1 and the proof breaks
+Q = P - 1              # order of the multiplicative group mod P — EXPONENTS live mod Q, not mod P
+G = 3                  # generator (illustrative); real Schnorr uses a prime-ORDER subgroup
 
 def modinv(a: int, p: int = P) -> int:
     return pow(a, -1, p)
@@ -51,22 +53,23 @@ class Schnorr:
 
     def prove(self) -> tuple[int, int]:
         # Commit: random nonce r (NEVER reuse — see blockchain-signatures-threshold Rule 4)
-        r = secrets.randbelow(P)
+        r = secrets.randbelow(Q)
         R = pow(G, r, P)                                  # commitment
         # Challenge via Fiat-Shamir (Rule 1: bind R and Y)
-        c = int.from_bytes(hashlib.sha256(f"{R},{self.Y}".encode()).digest(), "big") % P
-        # Response: s = r + c*x
-        s = (r + c * self.x) % P
+        c = int.from_bytes(hashlib.sha256(f"{R},{self.Y}".encode()).digest(), "big") % Q
+        # Response: s = r + c*x mod Q — the GROUP ORDER. Reduce mod P and the
+        # verification G^s == R * Y^c fails: exponents wrap at Q, not at P.
+        s = (r + c * self.x) % Q
         return (R, s)
 
     @staticmethod
     def verify(Y: int, R: int, s: int) -> bool:
-        c = int.from_bytes(hashlib.sha256(f"{R},{Y}".encode()).digest(), "big") % P
+        c = int.from_bytes(hashlib.sha256(f"{R},{Y}".encode()).digest(), "big") % Q
         # G^s == R * Y^c  (completeness & soundness)
         return pow(G, s, P) == (R * pow(Y, c, P)) % P
 
 if __name__ == "__main__":
-    sk = Schnorr(secrets.randbelow(P))
+    sk = Schnorr(secrets.randbelow(Q))
     R, s = sk.prove()
     assert Schnorr.verify(sk.Y, R, s)
 ```

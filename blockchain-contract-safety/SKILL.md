@@ -1,7 +1,7 @@
 ---
 name: blockchain-contract-safety
 description: Mandatory safety patterns for smart contracts — reentrancy, integer overflow, checks-effects-interactions, access control, and front-running. Use BEFORE writing or auditing ANY contract. NOT optional; do not skip.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Skill: Smart-Contract Safety
@@ -66,12 +66,14 @@ class SafeVault:
 
 def attack():
     vault = UnsafeVault(); vault.balances["att"] = 10
+    calls = {"n": 0}
     def cb():
-        if vault.balances.get("att", 0) >= 10:
-            vault.withdraw("att", 10, cb)            # re-enters on stale balance
-    vault.withdraw("att", 10, cb)                    # drains more than 10
+        calls["n"] += 1
+        if calls["n"] == 1:                              # re-enter exactly once
+            vault.withdraw("att", 10, cb)                # passes the check on the STALE balance (10)
+    vault.withdraw("att", 10, cb)
     return vault.balances
-# print(attack())  # balance goes negative -> the bug
+# print(attack())  # {'att': -10} -> withdrew 20 against a 10-deposit: the bug
 ```
 
 ### 4. Agent Execution Directives
