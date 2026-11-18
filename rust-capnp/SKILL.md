@@ -1,6 +1,7 @@
 ---
 name: rust-capnp
 description: Cap'n Proto schema design, Rust capnp-rpc bindings, async RPC server/client patterns, zero-copy message building and parsing, schema evolution, and interop with tokio for transport. Use when working with .capnp schema files, capnp-rpc, or high-performance IPC.
+format: reference
 version: 1.0.0
 ---
 

@@ -58,7 +58,7 @@ class LSTMCell:
         return h, c
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When gradients still vanish:** check forget-gate bias initialization (Rule 2) and sequence length; use gradient clipping for explosions.
 * **When choosing architecture:** LSTMs excel at long, variable-length sequences, but Transformers (`cs-vaswani-2017`) usually win when data is abundant and fully parallel.
 * **When debugging shapes:** all gates share the hidden dimension $d_h$; input / forget / output / candidate each carry their own $(W, U, b)$.

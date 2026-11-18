@@ -1,7 +1,7 @@
 ---
 name: rust-testing
 description: Designs Rust test suites across unit, integration, property (proptest), fuzz (cargo-fuzz), and benchmark (criterion) layers. Use when writing tests, adding fuzz targets, structuring #[cfg(test)], or proving invariants. NOT for production runtime code.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Skill: Testing Strategy in Rust
@@ -50,9 +50,11 @@ mod tests {
     }
 
     // Rule 3: a property test over the round-trip invariant.
+    // `..=` is load-bearing: proptest ranges are half-open, so `0..u32::MAX`
+    // silently never generates the boundary value.
     proptest::proptest! {
         #[test]
-        fn roundtrip_does_not_lose_value(v in 0u32..u32::MAX) {
+        fn roundtrip_does_not_lose_value(v in 0u32..=u32::MAX) {
             let bytes = v.to_le_bytes();
             prop_assert_eq!(parse_u32(&bytes), Some(v));
         }

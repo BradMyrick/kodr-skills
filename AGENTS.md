@@ -85,6 +85,10 @@ relevant `cs-*` foundational paper, then to the Core Principles.
 - security review / hardening / supply chain → `security-software`
 - CI/CD / GitHub Actions / releases → `devops-github-workflows`
 
+### Project stacks
+- TypeSafe System One units — typed judgments/probabilities (Choice/Noul/Score) replacing
+  prompt-and-parse LLM steps; routing, ranking, extraction, verification → `typesafe-ai`
+
 ### Frontend
 - Open Graph / Twitter share cards, canonical URLs, og:image specs,
   favicon/robots/sitemap 404s → `frontend-share-cards`

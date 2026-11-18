@@ -1,6 +1,7 @@
 ---
 name: frontend-ui-checks
 description: Headless rendered-page UI verification - multi-width matrices, visibility vs rects, keyboard order, contrast/type floors, truthful state, and checker engineering with per-failure IDs. Use when building UI checkers, hardening a frontend before launch, or diagnosing "looks fine but is broken" UI bugs. NOT for visual design decisions or styling preferences.
+format: reference
 version: 1.0.0
 ---
 

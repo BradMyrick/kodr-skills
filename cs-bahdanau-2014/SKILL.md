@@ -61,7 +61,7 @@ class AdditiveAttention:
         return c, alpha
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When long inputs degrade:** switch from a single encoder vector to per-step attention (Rule 2) — it is the whole point of the paper.
 * **When visualizing alignment:** plot the $\alpha_{ij}$ matrix; a well-trained NMT model shows a near-diagonal, mostly monotonic attention.
 * **When modernizing:** Vaswani's scaled dot-product attention is the drop-in successor; note that Bahdanau's RNN scan is exactly what Transformers remove.

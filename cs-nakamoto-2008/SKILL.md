@@ -78,7 +78,7 @@ def cumulative_work(chain: list) -> int:            # Rule 1: compare total work
     return sum(2**256 // max(1, target_from_bits(b.bits)) for b in chain)
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When assessing finality:** quote $P(q,z)$ for the attacker share and depth, not vague "it's confirmed."
 * **When comparing forks:** compare cumulative work (sum of $2^{256}/T$ per block), never raw block count.
 * **When extending:** never trust a block without re-verifying its PoW and all transactions (Rule 2) — relay-then-forget is an attack vector.

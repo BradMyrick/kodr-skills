@@ -58,7 +58,7 @@ def majority(values):
 ```
 *(OM is exponential in $f$ — it is pedagogical, not production. PBFT makes Byzantine agreement practical.)*
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When sizing a BFT system:** state the $n \ge 3f+1$ requirement up front and derive $f$ from $n$.
 * **When signatures are available:** say so — they cut the node requirement and are the default in modern chains.
 * **When citing necessity:** the 3-general / 1-traitor counterexample is the cleanest proof that $n = 3f$ fails; use it.

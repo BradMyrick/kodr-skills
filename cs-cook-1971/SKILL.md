@@ -63,7 +63,7 @@ def reduce_3sat_to_independent_set(clauses, num_vars):
 # hence INDEPENDENT-SET is NP-hard (3-SAT <=p IS, and 3-SAT is NP-complete).
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When proving hardness:** name the source NP-complete problem and show the poly-time mapping both ways ($x \in A \iff f(x) \in B$).
 * **When a problem feels intractable:** reduce SAT / 3-SAT / Hamiltonian / etc. **to** it, rather than searching for an algorithm.
 * **When citing:** Cook (1971) is the original; the Cook–Levin theorem credits Levin's independent 1973 proof.

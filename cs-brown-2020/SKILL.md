@@ -76,7 +76,7 @@ def few_shot_prompt(task: str, examples: list[tuple[str, str]], query: str) -> s
 #                          [("hello","bonjour"), ("water","eau")], "fire")
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When few-shot underperforms:** fix formatting/delimiters first (Rule 2); only then vary example count and order.
 * **When a task "needs training":** verify it truly exceeds in-context capability — many tasks improve with clearer instructions rather than fine-tuning.
 * **When reasoning about limits:** flag calibration, hallucination, and the 2048-token ceiling explicitly; these are the documented GPT-3 failure modes.

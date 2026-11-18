@@ -59,7 +59,7 @@ class Adam:
             p -= self.lr * m_hat / (np.sqrt(v_hat) + self.eps)             # Rule 2: ε outside sqrt
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When training diverges:** lower $\eta$ first; verify bias correction is on (Rule 1) and that weight decay uses AdamW (Rule 4).
 * **When comparing to SGD:** Adam converges faster and needs less tuning; SGD+momentum can still win on large-scale vision with careful schedules.
 * **When generalization is poor:** suspect AdamW-vs-Adam-L2 misuse or too-high $\eta$; consider switching to SGD for the final epochs.

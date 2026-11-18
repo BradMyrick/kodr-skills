@@ -180,10 +180,28 @@ your agent wire this repo into whatever instruction/skill mechanism it supports.
 2. Create `<category>-<specific>/SKILL.md` (dir name == `name`).
 3. Frontmatter: `name` (hyphen, == dir), a `description` that says **what** and
    **when** (front-load trigger keywords; add a `NOT for` gate if it overlaps a
-   sibling), and `version`.
+   sibling), and `version`. Add `format: reference` if the body is a curated
+   reference layout instead of the RFC spec below.
 4. Body: Core Model → Operational Rules → Reference Implementation → Agent
-   Directives (code must compile / type-check).
-5. Add a routing line to `AGENTS.md` and a row will appear here automatically.
+   Execution Directives (code must compile / type-check — `scripts/check.py`
+   executes it in CI).
+5. Add a routing line to `AGENTS.md` and a row to the tables below.
+6. Run `python3 scripts/check.py` — it validates frontmatter conventions,
+   router/README closure, stated skill counts, and runs/compiles the
+   reference code. CI runs the same check on every push.
 
 > `cs-*` skills also carry citation frontmatter (`title`/`authors`/`venue`/
 > `year`/`url`) as source-of-truth metadata.
+
+## Private overlay
+
+The live install may contain **private skills** (e.g. proprietary engagement
+pipelines) that are intentionally excluded from this public repo. Such skills
+are appended to the installed router between marker comments:
+
+```html
+<!-- BEGIN <NAME> ROUTER BLOCK --> ... <!-- END <NAME> ROUTER BLOCK -->
+```
+
+When syncing an install with this repo, keep the marked blocks; everything
+else should match `AGENTS.md` here.
