@@ -81,7 +81,7 @@ def paxos_round(proposer: Proposer, acceptors: list, value):
     return v if chosen else None
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When implementing:** never skip value inheritance (Rule 3) — it is the subtle bug that silently breaks agreement.
 * **When debugging stalls:** check for dueling proposers; without an eventual single leader, ballots starve each other (no progress, though safety holds).
 * **When extending to logs:** Multi-Paxos reuses one Phase 1 across a stable leadership lease for many slots — the common production form.

@@ -1,6 +1,6 @@
 # Installing these skills in any agent harness
 
-This repo is a **portable skill library**: 73 skill directories, each a
+This repo is a **portable skill library**: every top-level directory is a
 `<name>/SKILL.md` with YAML frontmatter (`name`, `description`, `version`) and
 an RFC-style body, plus a root `AGENTS.md` router that maps task types to
 skills. It works in any harness — opencode, Claude Code, Codex, Cursor,
@@ -24,7 +24,7 @@ WHAT THE LIBRARY IS
   names.
 - Each skill is a directory <REPO_PATH>/<skill-name>/SKILL.md with YAML
   frontmatter (name, description, version) and an RFC-style spec body.
-- 73 skills total. The directory name equals the frontmatter name.
+  The directory name equals the frontmatter name; one skill per top-level directory.
 
 YOUR JOB — do these steps in order, narrating each one:
 
@@ -58,7 +58,9 @@ YOUR JOB — do these steps in order, narrating each one:
    <REPO_PATH> before designing or implementing.
 
 5. VERIFY before reporting done:
-   - List or count the skills now visible to the harness (expect 73).
+   - List or count the skills now visible to the harness; the number must
+     equal the count of SKILL.md files in <REPO_PATH> (one per top-level
+     skill directory).
    - Demonstrate routing: load the SKILL.md for `rust-testing` (or ask me
      for a task that triggers a router match) and quote its first heading.
 

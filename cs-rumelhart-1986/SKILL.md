@@ -90,7 +90,7 @@ class DenseLayer:
 
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 
 * **When debugging exploding/vanishing gradients:** Force the agent to print out the structural shape and magnitude of $\delta_j^l$ across layers to find where the chains converge toward zero.
 * **When writing low-level custom backpropagation kernels:** Verify that the matrix math dot products strictly adhere to the shape dimensions of $(a_k^{l-1} \cdot \delta_j^l)$.

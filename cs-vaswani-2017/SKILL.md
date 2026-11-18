@@ -80,7 +80,7 @@ def positional_encoding(max_len, d_model):
     return pe
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When attention NaNs out:** check the $\sqrt{d_k}$ scaling and the mask sentinel — unmasked futures or missing scaling are the usual culprits.
 * **When porting to a framework:** keep Q/K/V projections separate per head; do not collapse heads before the softmax.
 * **When extending to LLMs:** GPT/decoder-only models (e.g. `cs-brown-2020`) drop the encoder and rely solely on the masked multi-head self-attention block.

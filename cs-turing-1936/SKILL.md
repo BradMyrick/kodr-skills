@@ -87,7 +87,7 @@ where
 }
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When asked "is X computable?":** frame the answer as the existence of a finite $\delta$ whose run produces $X$; do not appeal to physical time or memory limits.
 * **When modeling non-termination:** always pair a simulator with a step budget; surface halting as "$\delta$ undefined", never as an exception.
 * **When discussing decidability:** state the reduction explicitly (halting $\le$ target problem) before concluding undecidability.

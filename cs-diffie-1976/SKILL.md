@@ -53,7 +53,7 @@ a, A = dh_exchange(p, g); b, B = dh_exchange(p, g)
 assert shared_secret(a, B, p) == shared_secret(b, A, p)   # both derive g^ab
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When reviewing a DH deployment:** check the group (safe prime / standard curve), peer-value validation, and authentication — the trio that closes the classic MITM / subgroup holes.
 * **When asked "is it secure?":** it reduces to DLP; state the assumed hardness and key sizes (≥2048-bit finite-field DH, or ≥256-bit ECC).
 * **When designing protocols:** prefer ephemeral ECDHE for forward secrecy, and bind the transcript to long-term identity keys.

@@ -80,7 +80,7 @@ class Node:
         return (self.current_term, True)
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When implementing:** the most-missed rule is #4 (don't commit prior-term entries directly) — it breaks safety under partition; commit a no-op on leadership instead.
 * **When debugging split brain:** check that every RPC path updates `current_term` and steps down — stale terms are the usual culprit.
 * **When you need Byzantine tolerance:** Raft is the wrong tool; reach for PBFT or HotStuff.

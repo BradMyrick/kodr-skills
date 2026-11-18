@@ -85,7 +85,7 @@ class ResNet(nn.Module):
         return self.fc(self.avgpool(x).flatten(1))
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When a deep net won't train:** add residual skips before reaching for tricks — the degradation problem is almost always the culprit past ~30 layers.
 * **When dims change (stride/channel):** remember to project the shortcut (Rule 1); a mismatched add silently corrupts gradients.
 * **When citing depth:** ResNet-152 (3.57% top-5 ImageNet error, 2015) is the headline result; it swept ILSVRC/COCO that year.

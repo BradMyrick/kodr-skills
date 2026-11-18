@@ -65,7 +65,7 @@ def quorum_overlap(n, f):
     return overlap, overlap >= f + 1
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When sizing replicas:** always $3f+1$; derive $f$ from $n$ as $f = (n-1)//3$ and cite the honest-intersection argument.
 * **When a client stalls:** suspect a faulty primary; the remedy is view change, not retry storms.
 * **When optimizing throughput:** note PBFT's $O(n^2)$ message complexity is the price of BFT — HotStuff/LibraBFT reduce it to $O(n)$ via threshold signatures and linear voting.

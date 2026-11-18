@@ -61,7 +61,7 @@ def pagerank(adj: np.ndarray, d: float = 0.85,
     return pr
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When ranking a graph:** always build the *column-stochastic* matrix and confirm it has no all-zero columns unhandled — dangling nodes are the #1 numerical bug.
 * **When the result diverges:** check that $d < 1$ and that mass is conserved each step (sum to 1); a rank sink means teleport is missing.
 * **When scaling to billions of pages:** note power iteration is matrix-free over sparse adjacency — never materialize $G$.

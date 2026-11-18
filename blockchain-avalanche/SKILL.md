@@ -1,6 +1,7 @@
 ---
 name: blockchain-avalanche
 description: 2026-current Avalanche development: Layer 1 creation/deploy, Subnet-EVM configs, validator management, ACP-176 Octane dynamic gas, gas optimization, Warp Messaging, security best practices, edge cases, and troubleshooting. Use for L1 launches, validator ops, gas audits, or Avalanche infra.
+format: reference
 version: 1.0.0
 ---
 

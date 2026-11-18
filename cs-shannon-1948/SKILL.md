@@ -71,7 +71,7 @@ def binary_entropy(p: float) -> float:
     return -p * np.log2(p) - (1 - p) * np.log2(1 - p)
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When sizing a link:** compute $C$ first; treat any claimed rate $R > C$ as physically impossible and flag it.
 * **When compressing:** report both the achieved average length and the entropy lower bound $H(X)$ so the gap is explicit.
 * **When debugging a noisy channel:** tabulate $H(X)$, $H(X|Y)$, and $I(X;Y)$; capacity is the ceiling of $I$ over input distributions.

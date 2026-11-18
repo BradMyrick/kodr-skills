@@ -69,7 +69,7 @@ def verify(pub, digest: int, sigma: int) -> bool:   # production: RSA-PSS
     return pow(sigma, e, n) == digest
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When auditing:** reject any `m**e % n` or unpadded RSA in code — it is textbook and broken; require OAEP/PSS.
 * **When sizing:** match modulus to threat lifetime (2048-bit ≈ 112-bit security, 3072-bit ≈ 128-bit).
 * **When asked about quantum risk:** yes — Shor's algorithm factors $n$ in polynomial time; plan migration to lattice/KEM schemes for the post-quantum era.

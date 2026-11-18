@@ -86,7 +86,7 @@ impl DistributedNode {
 }
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When ordering events without a shared clock:** apply the happens-before rules first; only fall back to the total order (counter, then process-id tiebreak) for concurrent events.
 * **When debugging clock skew:** verify the receive rule uses `max(local, msg) + 1` — a missing `+1` or a swapped `max` is the canonical bug.
 * **When the global order diverges across nodes:** confirm every node uses the identical process-id tiebreak ($i < j$); inconsistent comparators yield different total orders.

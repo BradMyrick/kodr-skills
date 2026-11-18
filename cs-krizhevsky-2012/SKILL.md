@@ -69,7 +69,7 @@ class AlexNet(nn.Module):
         return self.classifier(x)        # logits; apply softmax/cross-entropy at loss time
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When porting the architecture:** reproduce the 96→256→384→384→256 conv widths and the 4096-4096-1000 head; these are load-bearing, not arbitrary.
 * **When training stalls:** verify ReLU (not $\tanh$), dropout train/test asymmetry, and LR schedule before touching depth.
 * **When modernizing:** note that BatchNorm and residual connections postdate this paper — use them to go deeper than 8 layers, but cite AlexNet as the ReLU+depth origin.

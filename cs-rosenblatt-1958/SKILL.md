@@ -66,7 +66,7 @@ class Perceptron:
         return updates
 ```
 
-### 4. Agent Execution Prompting Directives
+### 4. Agent Execution Directives
 * **When teaching the model:** always pair the rule with Novikoff's bound so the separability assumption is explicit.
 * **When a perceptron fails to converge:** diagnose non-separability first (plot XOR) rather than tuning $\eta$ — bigger learning rates cannot fix a hyperplane that cannot exist.
 * **When extending:** frame multi-layer/backpropagation (`cs-rumelhart-1986`) as the direct remedy to the single-hyperplane ceiling.

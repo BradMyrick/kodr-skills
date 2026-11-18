@@ -1,6 +1,7 @@
 ---
 name: frontend-share-cards
 description: Link-preview metadata (Open Graph / Twitter cards), canonical URLs, favicons, robots and sitemap for Next.js App Router sites. Use when shipping or auditing a site's share cards, scrape tags, or the favicon/robots/sitemap 404s. NOT for general styling, components, or SPA routing.
+format: reference
 version: 1.0.0
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: security-software
 description: Software security practices for systems written in Rust and Go. Covers supply chain auditing, dependency hygiene, threat modeling, secret management, secure coding patterns, SAST/DAST tooling, and CI security hardening. Use when reviewing code for vulnerabilities, setting up security tooling, or designing secure systems.
+format: reference
 version: 1.0.0
 ---
 

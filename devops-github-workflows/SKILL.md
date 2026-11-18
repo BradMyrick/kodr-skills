@@ -1,6 +1,7 @@
 ---
 name: devops-github-workflows
 description: GitHub Actions CI/CD workflows for Rust projects. Covers build matrices, caching, fmt/clippy/test jobs, release artifact publishing, Docker builds, and secret management. Use when writing or debugging .github/workflows/*.yml files.
+format: reference
 version: 1.0.0
 ---
 
